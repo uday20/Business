@@ -1,0 +1,65 @@
+#%RAML 1.0
+title: Story Business Service API
+baseUri: https://mocksvc.mulesoft.com/mocks/6d5f94c5-7502-4536-ae98-e367da9c2df1/{version} # baseUri: # baseUri: https://dev-story-business-service.cloudhub.io/{version}
+protocols: [HTTPS]
+mediaType: application/json
+version: v1
+
+documentation:
+  - !include documentation/storyAPIDoc.raml
+
+uses: 
+  languageEnum: libraries/enum.raml
+
+traits: 
+  secured: !include traits/secured.raml         
+
+
+/stories:
+  get:
+    queryParameters: 
+      language:
+        displayName: "Language"
+        type: languageEnum.language
+        required: false
+      type:
+        displayName: "Type of return object"
+        type: string
+        enum: ["Stories", "Facts", "Evidence"]
+        required: false
+      fromPublishedDate:
+        type: datetime
+        required: false
+      toPublishedDate:
+        type: datetime
+        required: false
+      author: 
+        type: string[]
+        required: false
+      topic: 
+        type: string[]
+        required: false
+      person: 
+        type: string[]
+        required: false
+      place: 
+        type: string[]
+        required: false
+      thing: 
+        type: string[]
+        required: false
+      organization: 
+        type: string[]
+        required: false
+      event: 
+        type: string[] 
+        required: false
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: !include datatypes/storyList.raml
+      503:
+        body:
+          application/json:
+            type: string

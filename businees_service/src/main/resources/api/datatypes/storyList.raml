@@ -1,0 +1,9 @@
+#%RAML 1.0 DataType
+displayName: Story List
+description: This API interacts with Stories, both created on the platform as well as brought in from outside.
+type: object
+properties:
+  storyList:
+    type: array
+    items: !include story.raml
+    
